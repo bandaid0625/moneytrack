@@ -1,0 +1,41 @@
+<div class="wrapper">
+  <div class="container">
+    <%= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f| %>
+      <h1>Sign up</h1>
+      <%= render "devise/shared/error_messages", resource: @user %>
+      <form>
+        <div class="form-group">
+          <%= f.label :avatar, "Profile image:" %>
+          <%= f.file_field :avatar %>
+        </div>
+        <div class="form-group">
+          <%= f.label :nickname, "Nickname:" %>
+          <%= f.text_field :nickname, autofocus: true %>
+        </div>
+        <div class="form-group">
+          <%= f.label :email, "E-mail:" %>
+          <%= f.email_field :email %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password, "Password:" %>
+          <%= f.password_field :password, autocomplete: "off" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password_confirmation, "Password confirmatiom" %>
+          <%= f.password_field :password_confirmation %>
+        </div>
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <%= f.collection_select(:age_id, Age.all, :id, :name, {}, {class:"age-select"}) %>
+        </div>
+        <div class="form-group">
+          <label for="age">Family members:</label>
+          <%= f.collection_select(:family_id, Family.all, :id, :name, {}, {class:"family-select"}) %>
+        </div>
+        <div class="form-group">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    <% end %>
+  </div>
+</div>
