@@ -1,0 +1,14 @@
+ja:
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+  activerecord:
+    attributes:
+      user:
+        nickname: ニックネーム
+        age_id: 年齢
+        family_id: 家族構成
+        avatar: プロフィール写真
+  simple_calendar:
+    previous: "＜　"
+    next: "　＞"
