@@ -1,0 +1,174 @@
+.new-container {
+  width: 700px;
+  margin: 30px auto;
+  height: 100%;
+  margin-bottom: 30px;
+  background-color: white;
+}
+
+.income_form {
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.new-title {
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+.income_price,
+.memo,
+.date {
+  margin-bottom: 15px;
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+/* body {
+  font-family: 'Open Sans', helvetica, arial, sans-serif;
+  max-width: 305px;
+  margin: 3rem auto 0;
+  line-height: 1.6;
+  color: #444;
+} */
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+h1 {
+  line-height: 1.2;
+}
+
+p {
+  margin: 0 0 1.6rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.radio-inline__input {
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important;
+}
+
+.radio-inline__label {
+    display: inline-block;
+    padding: 10px 35px;
+    margin: 7px 23px;
+    border-radius: 5px;
+    transition: all .2s;
+}
+
+.radio-inline__input:checked + .radio-inline__label {
+    background: #4682B4;
+    color: #fff;
+    text-shadow: 0 0 1px rgba(0,0,0,.7);
+}
+
+.radio-inline__input:focus + .radio-inline__label {
+    outline-color: #4D90FE;
+    outline-offset: -2px;
+    outline-style: auto;
+    outline-width: 5px;
+}
+
+/* ここからカテゴリー */
+
+.category-container {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  font-family: 'Zen Kaku Gothic New';
+}
+
+.radio-tile-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.input-container {
+  position: relative;
+  height:  7rem;
+  width:  7rem;
+  margin: 0.2rem;
+}
+
+.radio-button {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.radio-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #dddddd;
+  border-radius: 5px;
+
+  transition: transform 300ms ease;
+}
+
+.icon svg {
+  fill: #dddddd;
+  width: 3rem;
+  height: 3rem;
+}
+
+.radio-tile-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: black;
+}
+
+.radio-button:checked + .radio-tile {
+  background-color: skyblue;
+  border: 2px solid #4682B4;
+  color: white;
+  transform: scale(1.1, 1.1);
+  
+  .icon svg {
+    fill: white;
+    background-color: skyblue;
+  }
+  .radio-tile-label {
+    color: white;
+    background-color: skyblue;
+  }
+}
+
+.button {
+  width: 250px;
+  display       : block;
+  border-radius : 5%;          /* 角丸       */
+  font-size     : 20px;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 20px 20px;   /* 余白       */
+  background    : #4682B4;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  border        : 2px solid #4D90FE;    /* 枠の指定 */
+  margin: 20px auto;
+}
+.button:hover {
+  color         : #000066;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
+}

@@ -1,0 +1,61 @@
+<%= render partial: "sidebar" %>
+
+<%= render partial: "header" %>
+
+  <div class="main-middle">
+    <div class="left">
+      <div class="index">Carendar</div>
+      <%= month_calendar events: @incomes do |date, incomes|%>
+        <%= date.day %> 
+        <% incomes.each do |income| %> 
+          <div>
+            <%= @day_record.sum(:income_price)[Date.today.day] %>
+          </div>
+        <% end %>
+      <% end %> 
+    </div>
+    <div class="table-right">
+      <div class="index">Balance</div>
+      <div class="sum-now-container">
+        <div class="sum-now">
+          <ul class="months">
+            <li class="month">
+              <div class="letter">収入</div>
+              <h5>200000円</h5>
+            </li>
+            <li class="month">
+              <div class="letter">支出</div>
+              <h5>100000円</h5>
+            </li>
+            <li class="month">
+              <div class="letter">合計</div>
+              <h5>100000円</h5>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="index">Index<%= "（#{@year}年#{@month}月）"%></div>
+      <div class="index-container">
+        <div class="day-each">
+          <div class="date">○月○日(○)</div>            
+          <div class="sum-day">1,000円</div>
+        </div>
+        <%# 収入と出費で分ける %>
+        <div class="usage">
+          <div class="set">
+            <div class="icon">▲</div>
+            <div class="use">電気代</div>
+          </div>
+          <div class="price">2000円</div>
+        </div>
+        <div class="usage">
+          <div class="set">
+            <div class="icon">▲</div>
+            <div class="use">電気代</div>
+          </div>
+          <div class="price">2000円</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

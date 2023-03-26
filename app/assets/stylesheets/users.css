@@ -3,18 +3,21 @@
   font-weight: 600;
 }
 
-.wrapper {
+.wrap {
   height: 100vh;
   width: 100vw;
   background-color: #dddddd;
 }
 
 .container {
-  height: 100vh;
+  height: 100%;
   width: 50vw;
   margin: 0 auto;
-  background-color: #ffffff;
-  padding: 20px 30px;
+  position: fixed;
+  overflow: auto;
+  box-sizing: border-box;
+  /* background-color: #ffffff; */
+  /* padding: 20px 30px; */
 }
 .contents row {
   width: 100vw;
