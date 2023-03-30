@@ -1,24 +1,77 @@
 # README
+#テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column                | Type     | Option                     |
+| --------------------- | -------- | -------------------------- |
+| nickname              | string   | null: false                | 
+| email                 | string   | null: false, unique: true  |
+| encrypted_password    | string   | null: false                | 
+| age_id                | integer  | null: false                |
+| family_id             | integer  | null: false                |
 
-* Ruby version
 
-* System dependencies
+### Association
+has_many :incomes
+has_many :expenses
 
-* Configuration
+--------------------------------------------------------------------
 
-* Database creation
+## incomes テーブル
 
-* Database initialization
+| Column              | Type        | Option                          |
+| ------------------- | ----------- | ------------------------------- |
+| start_time          | datetime    | null: false                     | 
+| income_price        | integer     | null: false                     |
+| memo                | text        |                                 |
+| category            | integer     |                                 |
+| user                | references  | null: false, foreign_key: true  |
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+### Association
+belongs_to :user
 
-* Deployment instructions
+--------------------------------------------------------------------
 
-* ...
+## expenses テーブル
+
+| Column              | Type        | Option                          |
+| ------------------- | ----------- | ------------------------------- |
+| start_time          | datetime    | null: false                     | 
+| expense_price       | integer     | null: false                     |
+| memo                | text        |                                 |
+| genre               | integer     |                                 |
+| category            | integer     |                                 |
+| user                | references  | null: false, foreign_key: true  |
+
+
+### Association
+belongs_to :user
+
+--------------------------------------------------------------------
+
+## fixedcost テーブル
+
+| Column              | Type        | Option                          |
+| ------------------- | ----------- | ------------------------------- |
+| start_time          | datetime    | null: false                     | 
+| cost_price          | integer     | null: false                     |
+| memo                | text        |                                 |
+| genre               | integer     |                                 |
+| category            | integer     |                                 |
+| user                | references  | null: false, foreign_key: true  |
+
+
+### Association
+belongs_to :user
+
+## aim テーブル
+
+| Column              | Type        | Option                          |
+| ------------------- | ----------- | ------------------------------- |
+| aim_amount          | integer     |                                 | 
+| user                | references  | null: false, foreign_key: true  |
+
+### Association
+belongs_to :user
