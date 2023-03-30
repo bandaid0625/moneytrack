@@ -1,10 +1,13 @@
 class Income < ApplicationRecord
   belongs_to :user
+
+  def income?
+    true
+  end
   
   with_options presence: true do
     validates :start_time
     validates :income_price
-    validates :genre
     validates :category
   end
 

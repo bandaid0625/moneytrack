@@ -1,61 +1,241 @@
-<%= render partial: "sidebar" %>
+<%# 全部の入れ物 %>
 
-<%= render partial: "header" %>
-
-  <div class="main-middle">
-    <div class="left">
-      <div class="index">Carendar</div>
-      <%= month_calendar events: @incomes do |date, incomes|%>
-        <%= date.day %> 
-        <% incomes.each do |income| %> 
-          <div>
-            <%= @day_record.sum(:income_price)[Date.today.day] %>
-          </div>
+<%# サイドバー %>
+  <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 18vw; height:100%;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <%= image_tag "logo.png", size: "80x80" %>
+      <span class="fs-4">Money Track</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto" >
+      <li class="nav-item">
+        <a href="/" class="nav-link text-white" aria-current="page">
+          <svg class="bi me-2" width="20" height="20"><use xlink:href="#home"/></svg>
+          ホーム
+        </a>
+      </li>
+      <li>
+        <a href="/incomes/new" class="nav-link text-white">
+          <svg class="bi me-2" width="20" height="20"><use xlink:href="#bank"/></svg>
+          新規収入
+        </a>
+      </li>
+      <li>
+        <a href="/spendings/new" class="nav-link text-white">
+          <svg class="bi me-2" width="20" height="20"><use xlink:href="#cash-coin"/></svg>
+          新規出費
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="20" height="20"><use xlink:href="#grid"/></svg>
+          固定出費
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link text-white">
+          <svg class="bi me-2" width="20" height="20"><use xlink:href="#info-circle"/></svg>
+          使用方法
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+        
+        <% if current_user.avatar.present? %>
+          <%= image_tag current_user.avatar, class: "rounded-circle", size: "60x60" %>
+        <% else %>
+          <%= image_tag "default.png", class: "rounded-circle", size: "45x45" %>
         <% end %>
-      <% end %> 
+        <%= "#{current_user.nickname}" %>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+        <li><a class="dropdown-item" href="#">New project...</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><%= link_to "Log out", destroy_user_session_path, method: :delete, class: 'dropdown-item'%></li>
+      </ul>
     </div>
-    <div class="table-right">
-      <div class="index">Balance</div>
-      <div class="sum-now-container">
-        <div class="sum-now">
-          <ul class="months">
-            <li class="month">
-              <div class="letter">収入</div>
-              <h5>200000円</h5>
-            </li>
-            <li class="month">
-              <div class="letter">支出</div>
-              <h5>100000円</h5>
-            </li>
-            <li class="month">
-              <div class="letter">合計</div>
-              <h5>100000円</h5>
-            </li>
-          </ul>
+  </div>
+
+
+<%# 右側 %>
+  <div class="main-right">
+
+<%# ヘッダー %>
+    <div class="main_header">
+
+<%# ヘッダーの左側サーチ %>
+      <div class="header_left">
+        <form class="search-form" action="/search" method="get">
+          <input type="text" name="q" placeholder="Search...">
+          <button type="submit">Search</button>
+        </form>
+      </div>
+
+<%# ヘッダーの右側 %>
+      <div class="wrench-adjustable-circle-fill">
+        <a href="#" class="bi bi gear">
+          <svg class="bi me-2" width="25" height="25" ><use xlink:href="#wrench-adjustable-circle-fill"/></svg>
+        </a>
+      </div>
+    </div>
+
+
+    <div class="main-middle">
+      <div class="left">
+        <div class="index_radio">
+          <div class="index">Carendar</div>
+
+          <div class="radio">
+            <input type="radio" id="income-radio" name="calendar-type" value="income" checked>
+            <label for="income-radio">収入</label>
+            <input type="radio" id="spending-radio" name="calendar-type" value="spending">
+            <label for="spending-radio">支出</label>
+          </div>
+        </div>
+        <!-- JavaScriptの実装 -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+
+          $(document).ready(function() {
+            var incomeRadio = $('#income-radio');
+            var spendingRadio = $('#spending-radio');
+            var incomeIndex = $('.income-index');
+            var spendingIndex = $('.spending-index');
+
+            // 初期表示時の設定
+            if (incomeRadio.is(':checked')) {
+              incomeIndex.show();
+              spendingIndex.hide();
+            } else {
+              incomeIndex.hide();
+              spendingIndex.show();
+            }
+
+            // ラジオボタンの変更時の処理
+            $('input[name="calendar-type"]').on('change', function() {
+              if (incomeRadio.is(':checked')) {
+                incomeIndex.show();
+                spendingIndex.hide();
+              } else {
+                incomeIndex.hide();
+                spendingIndex.show();
+              }
+            });
+          });
+
+        </script>
+
+
+        <!-- incomeのカレンダー -->
+        <div class="income-index">
+          <% day_incomes_sum = {} %>
+          <%= month_calendar events: @incomes do |date, incomes|%>
+            <% day_income_sum = incomes.sum(&:income_price) %>
+            <% day_incomes_sum[date.day] = day_income_sum %>
+            <%= date.day %>
+            <% if day_incomes_sum[date.day] > 0 %>
+              <div style="color: blue;">
+                <%= day_incomes_sum[date.day] %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <!-- spendingのカレンダー -->
+        <div class="spending-index">
+          <% day_spendings_sum = {} %>
+          <%= month_calendar events: @spendings do |date, spendings|%>
+            <% day_spending_sum = spendings.sum(&:spending_price) %>
+            <% day_spendings_sum[date.day] = day_spending_sum %>
+            <%= date.day %>
+            <% if day_spending_sum > 0 %>
+              <div style="color: orange;">
+                <%= day_spendings_sum[date.day] %>
+              </div>
+            <% end %>
+          <% end %>
         </div>
       </div>
-      <div class="index">Index<%= "（#{@year}年#{@month}月）"%></div>
-      <div class="index-container">
-        <div class="day-each">
-          <div class="date">○月○日(○)</div>            
-          <div class="sum-day">1,000円</div>
-        </div>
-        <%# 収入と出費で分ける %>
-        <div class="usage">
-          <div class="set">
-            <div class="icon">▲</div>
-            <div class="use">電気代</div>
+      <div class="table-right">
+        <div class="index">Balance</div>
+        <div class="sum-now-container">
+          <div class="sum-now">
+            <ul class="months">
+              <li class="month">
+                <div class="letter">収入</div>
+                <div class="sum_amount" style="color:blue;">
+                  <% if @income_month.present? %>
+                    <%= "#{@income_month.sum(:income_price)}円" %>
+                  <% else %>
+                    0円
+                  <% end %>
+                </div>
+              </li>
+              <li class="month">
+                <div class="letter">支出</div>
+                <div class="sum_amount" style="color:orange;">
+                  <% if @spendings_month.present? %>
+                    <%= "#{@spendings_month.sum(:spending_price)}円" %>
+                  <% else %>
+                    0円
+                  <% end %>
+                </div>
+              </li>
+              <li class="month">
+                <div class="letter">合計</div>
+                <div class="sum_amount">
+                    <%= "#{@income_month.sum(:income_price) - @spendings_month.sum(:spending_price)}円" %>
+                </div>
+              </li>
+            </ul>
           </div>
-          <div class="price">2000円</div>
         </div>
-        <div class="usage">
-          <div class="set">
-            <div class="icon">▲</div>
-            <div class="use">電気代</div>
-          </div>
-          <div class="price">2000円</div>
-        </div>
+        <div class="index">Index</div>
+        <ul class="index-container">
+        
+          <% last_date = nil %>
+          <% @records.sort_by(&:start_time).each do |record| %>
+            <% if last_date != record.start_time.strftime("%Y-%m-%d") %>
+              <% last_date = record.start_time.strftime("%Y-%m-%d") %>
+              <%= last_date %>
+            <% end %>
+            <div class="each-usage">
+              <div class="usage-left">
+                <div style="color: <%= record.income? ? 'blue' : 'orange' %>">
+                  <%= record.category %>
+                  <% if record.memo.present? %>
+                    (<%= record.memo %>)
+                  <% end %>
+                  <%= record.income? ? record.income_price : record.spending_price %>円
+                </div>
+              </div>
+              <div class="usage-right">
+
+                <div class="delete">
+                <svg version="1.1" x="0px" y="0px" viewBox="0 0 512 512" style="width: 16px; height: 16px; opacity: 1;" xml:space="preserve">
+                  <path class="st0" d="M77.869,448.93c0,13.312,1.623,25.652,5.275,35.961c4.951,13.636,13.475,23.457,26.299,26.297c2.598,0.488,5.277,0.812,8.117,0.812h277.364c0.73,0,1.381,0,1.947-0.082c26.463-1.703,37.258-29.219,37.258-62.988l11.121-269.324H66.748L77.869,448.93z M331.529,239.672h52.68v212.262h-52.68V239.672z M229.658,239.672h52.682v212.262h-52.682V239.672z M127.789,239.672h52.762v212.262h-52.762V239.672z" style="fill: rgb(75, 75, 75);"></path>
+                  <path class="st0" d="M368.666,89.289c0.078-2.028,0.242-4.059,0.242-6.09v-5.598c0-42.777-34.822-77.602-77.6-77.602h-70.701c-42.778,0-77.6,34.824-77.6,77.602v5.598c0,2.031,0.162,4.062,0.326,6.09H28.721v62.582h454.558V89.289H368.666z M320.205,83.199c0,2.113-0.242,4.141-0.648,6.09H192.361c-0.406-1.949-0.65-3.977-0.65-6.09v-5.598c0-15.91,12.986-28.898,28.897-28.898h70.701c15.99,0,28.896,12.988,28.896,28.898V83.199z" style="fill: rgb(75, 75, 75);"></path>
+                </svg>
+
+                <% if record.income? %>
+                    <%= link_to '消去', income_path(record.id), method: :delete %>
+                  <% else %>
+                    <%= link_to '消去', spending_path(record.id), method: :delete %>
+                  <% end %>
+                
+
+                  
+                </div>  
+              </div>
+              
+            </div>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
-</div>
