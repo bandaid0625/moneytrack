@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 2023_03_26_152128) do
     t.datetime "start_time", null: false
     t.integer "income_price", null: false
     t.text "memo"
-    t.string "genre", null: false
     t.string "category", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -49,6 +48,7 @@ ActiveRecord::Schema.define(version: 2023_03_26_152128) do
     t.datetime "start_time", null: false
     t.integer "spending_price", null: false
     t.text "memo"
+    t.string "genre", null: false
     t.string "category", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false

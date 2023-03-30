@@ -4,6 +4,7 @@ class CreateSpendings < ActiveRecord::Migration[6.0]
       t.datetime   :start_time,    null: false
       t.integer    :spending_price,  null: false
       t.text       :memo
+      t.string     :genre,         null: false
       t.string     :category,      null: false
       t.references :user,          null: false, foreign_key: true
       t.timestamps

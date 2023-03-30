@@ -1,6 +1,11 @@
 class User < ApplicationRecord
   has_one_attached :avatar
   has_many :incomes
+  has_many :spendings
+
+  def income?
+    true
+  end
 
   # validates :avatar, content_type: { in: %w[image/jpeg image/gif image/png],
   #   message: "有効なフォーマットではありません" },

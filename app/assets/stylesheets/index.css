@@ -20,6 +20,17 @@
   font-family: 'Zen Kaku Gothic New';
 }
 
+.index_radio {
+  display: flex;
+}
+
+.radio {
+  margin: 17px 10px 5px 20px;
+  font-size: 15px;
+  font-family: 'Zen Kaku Gothic New';
+}
+
+
 .left {
   width: 50vw;
   height: 90vh;
@@ -67,9 +78,13 @@ ul.months {
   font-family: 'Zen Kaku Gothic New';
 }
 
+.sum_amount {
+  font-size: 20px;
+  margin:0 auto;
+}
 .sum-now {
   margin-right: 30px;
-  padding: 15px 30px;
+  padding: 15px 70px;
   background-color: white;
   justify-content: space-between;
 }
@@ -80,8 +95,9 @@ li {
 
 .letter {
   text-align: center;
-  margin-bottom: 10px;
+
   font-size: 17px;
+  margin: 10px auto;
   
 } 
 
@@ -97,44 +113,46 @@ li {
 
 .index-container {
   margin-right: 30px;
-  padding: 15px 30px;
+  padding: 20px;
   background-color: white;
-  justify-content: space-between;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
-.day-each {
-  width: calc(100% - 20px);
-  height:25px;
-  background-color: #4682B4;
-  margin: 0 auto;
+.each-usage {
   display: flex;
   justify-content: space-between;
-  color: white;
-  padding: 0 20px;
-  border: 1px solid #dddddd;
-  margin: 0 0 -1px;
-  font-family: 'Zen Kaku Gothic New';
 }
 
-.usage {
-  width: calc(100% - 20px);
-  height:25px;
-  background-color: white;
-  margin: 0 auto;
+.usage-right {
   display: flex;
-  justify-content: space-between;
-  color: black;
-  padding: 0 20px;
-  border: 1px solid #dddddd;
-  margin: 0 0 -1px;
-  font-family: 'Zen Kaku Gothic New';
+
 }
 
-.set {
-  display: flex;
+.edit,
+.delete {
+  border: 2px solid #dddddd;
+  border-radius: 5px;
+  padding: 2px;
+  font-size: 15px;
+  margin-right: 5px;
 }
 
-.genre {
-  margin: 20px;
+.set span {
+  margin-right: 5px;
+}
+
+.set span:last-child {
+  margin-right: 0;
+}
+
+.set span:first-child {
+  text-transform: capitalize;
+}
+
+.set span.color-green {
+  color: green;
+}
+
+.set span.color-orange {
+  color: orange;
 }
