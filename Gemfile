@@ -63,3 +63,4 @@ gem 'rails-i18n'
 gem 'active_hash'
 gem 'simple_calendar'
 gem 'pry-rails'
+gem "chartkick"

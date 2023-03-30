@@ -14,9 +14,6 @@ class UsersController < ApplicationController
     @income_sum = @incomes.sum(:income_price)
     @spending_sum = @spendings.sum(:spending_price)
     
-    # @income = Income.find(record.id)
-    # @spending = Spending.find(record.id)
-    
     if @income_month.present? || @spendings_month.present?
       @records = (@income_month.to_a + @spendings_month.to_a).sort_by(&:start_time).reverse
       @records.sort_by! { |r| [r.start_time.to_date, r.is_a?(Income) ? 0 : 1] }
@@ -24,10 +21,6 @@ class UsersController < ApplicationController
       @records = []
     end
 
-    # @day_record =@user.incomes.group("DATE(start_time)")
-    
-    
-    
     # 日の収入
     @spending_day = Spending.where(start_time: Time.now.beginning_of_day..Time.now.end_of_day).includes(:user).order(start_time: "ASC")
     # 日の収入合計
@@ -38,9 +31,5 @@ class UsersController < ApplicationController
     @spending_day_sum = @spending_day.sum(:spending_price)
     
     
-    
-    
   end
-
-  
 end
