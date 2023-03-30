@@ -4,7 +4,11 @@ class Spending < ApplicationRecord
   def income?
     false
   end
+
   
+  
+
+
   with_options presence: true do
     validates :start_time
     validates :spending_price

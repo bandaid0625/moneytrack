@@ -17,6 +17,12 @@ class SpendingsController < ApplicationController
   def destroy
     spending = Spending.find(params[:id])
     spending.destroy
+    redirect_to root_path
+  end
+
+  def show
+    @spending_by_category = Spending.group(:category).sum(:spending_price)
+                                .pluck(:category, :spending_price).to_h
   end
 
 
